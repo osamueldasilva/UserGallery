@@ -1,0 +1,76 @@
+body {
+   display: block;
+}
+
+.carrocel {
+    height: 100vh;   
+    width: 100%;
+    
+}
+
+
+
+/*---------------------BOTAO TOOGLE------------------*/
+
+.toogle {
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+ .div {
+    height: 10px;
+    width: 100px;
+}
+
+.toogle h1 {
+   
+    font-size: 1.5rem;
+    color: #7D7D7D;
+}
+
+.btn {
+    width: 8rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.btn-toogle1 {
+    border-radius: 5px;
+    margin-right: 5px;
+    border: 1px solid #7D7D7D;
+    
+}
+
+.btn-toogle2 {
+    border-radius: 5px;
+    border: 1px solid #7D7D7D;
+}
+
+
+
+
+ svg {
+    fill: #7D7D7D;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+}
+
+
+.btn-toogle1:focus svg, .btn-toogle2:focus svg{
+    background-color: white;
+    fill: #008FFB;
+}
+
+.btn-toogle1:hover svg,.btn-toogle2:hover svg{
+    background-color: rgb(182, 179, 179);
+    fill: #000;
+}
+

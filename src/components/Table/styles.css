@@ -1,0 +1,163 @@
+.tabela {
+    margin-top: 10rem;
+}
+
+table {
+    font-family: 'Montserrat';
+    width: 80%;
+    border-collapse: collapse;
+    flex-direction: column;
+    margin-left: 10%;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #7d7d7d;
+    
+  }
+
+  th {
+   background-color: #B5B5B5;
+   font-weight: 700;
+  }
+
+  td {
+    font-weight: 500;
+  }
+
+button {
+    border: none;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.delete svg {
+    fill: white;
+    background-color: #F63F60;
+    width: 32px;
+    height: 32px;
+}
+
+.view svg {
+    fill: white;
+    background-color: #008FFB;
+    width: 32px;
+    height: 32px;
+}
+
+/*-------------------------*/
+
+.modal {
+    width: 50rem;
+    height: 30rem; 
+    color: red; 
+    background-color: white; 
+    display:flex;
+    justify-content: center; 
+    align-items:center; 
+    flex-direction:column;
+    border-radius: 5px;
+}
+
+.imageModal {
+    width: 35rem;
+    height: 20rem;
+    
+}
+
+.btnModal {
+  margin-top: 1rem;
+  background-color: #7d7d7d;
+  height: 3rem;
+  color: white;
+  width: 5rem;
+
+  border-radius: 3px;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.btnModal:hover {
+  background-color: #F63F60;
+  transition: 1s;
+  border-radius: 3px;
+}
+
+.imgModal {
+  border-radius: 3px;
+  width: 100%;
+  height: 100%;
+}
+
+/* =================================================================*/
+.upload {
+  
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.btnUpload {
+  width: 13rem;
+  height: 3rem;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  background-color: #008FFB;
+  margin-right: 15px;
+  border-radius: 3px;
+}
+
+
+/* ------------ */
+
+.uploadModal {
+  border-radius: 5px;
+  background-color: #ffffff;
+  width: 50rem;
+  height: 30rem;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+input[type='file'] {
+  background-image: url(https://cdn-icons-png.flaticon.com/128/937/937345.png);
+  height: 15rem;
+  width: 25rem;
+  border: 5px dashed #008FFB;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100px;
+  appearance: none;
+
+}
+
+.btnModalCadastro {
+  background-color: #008FFB;
+  font-size: 18px;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.btnModalCadastro:hover {
+  background-color: #036cbd;
+}
+
+.btnModalCancelar {
+  background-color: gray;
+  font-size: 18px;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.btnModalCancelar:hover {
+  background-color: #968e8e;
+}
