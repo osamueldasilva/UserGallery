@@ -2,6 +2,7 @@ import "./styles.css";
 import { ImagemDelete, ImagemVisibility } from "../../assets/image/index";
 import { ComponentModal } from "../Modal/index";
 import { useState } from "react";
+import { api } from "../../service/api";
 
 function Table() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,8 +11,18 @@ function Table() {
   // POrem os dois sets dentro da funcao do button precisa ser true
   const [isUpload, setIsUpload] = useState(false);
 
+  const [image, setImage] = useState([
+    {
+        id: 1,
+        name: "Arquivo1222",
+        extension: ".txt",
+        vlSize: "10kb",
+        date: "01/01/2023"
+    }
+  ]);
+  
   function openModal() {
-    setIsOpen(true);
+    setIsOpen(true)
   }
 
   function closeModal() {
@@ -22,10 +33,19 @@ function Table() {
     setIsUpload(isUpload);
   }
 
+ async function handleDelete(idDelete) {
+    
+    try {
+      // await  api.delete(`image/${idDelete}`); 
+      setImage(prevState => prevState.filter(({id}) => id !== idDelete))
+    } catch (error) {
+      
+    }
+  }
+
   return (
     <>
-      <div className="upload">
-        {/*  */}
+      <div className="upload">     
         <button
           onClick={() => {
             openModal();
@@ -50,12 +70,13 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Arquivo1</td>
-              <td>.txt</td>
-              <td>10KB</td>
-              <td>01/01/2023</td>
+            {image.map(({id, name, date, extension, vlSize}) => (
+              <tr key={id} id="row">
+              <td>{id}</td>
+              <td>{name}</td>
+              <td>{extension}</td>
+              <td>{vlSize}</td>
+              <td>{date}</td>
               <td className="iconAcao">
                 <button
                     className="view"
@@ -66,11 +87,16 @@ function Table() {
                 >
                   <ImagemVisibility />
                 </button>
-                <button className="delete">
+                <button 
+                  className="delete"
+                  onClick={() => {handleDelete(id)}}
+                  
+                >
                   <ImagemDelete />
                 </button>
               </td>
             </tr>
+            ))}
           </tbody>
         </table>
         <ComponentModal isOpen={isOpen} closeModal={closeModal}>

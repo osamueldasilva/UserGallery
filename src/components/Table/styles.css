@@ -125,15 +125,15 @@ button {
 }
 
 input[type='file'] {
-  background-image: url(https://cdn-icons-png.flaticon.com/128/937/937345.png);
-  height: 15rem;
-  width: 25rem;
-  border: 5px dashed #008FFB;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 100px;
-  appearance: none;
+  width: 350px;
+  max-width: 100%;
+  color: #444;
+  padding: 2px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid rgba(8, 8, 8, 0.288);
 
+  
 }
 
 .btnModalCadastro {

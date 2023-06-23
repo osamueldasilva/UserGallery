@@ -22,8 +22,9 @@ function Login() {
       
       navigate('/galeria')
       console.log(data)
+      alert("Login successful")
     } catch (error) {
-      
+      alert("Login failed")
     }
   }
 
