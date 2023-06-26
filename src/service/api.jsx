@@ -1,11 +1,17 @@
-import axios from 'axios'
+import axios from "axios";
 
-function apiUserGallery() {
-    const apiGallery = axios.create( {
-        baseURL: "http://192.168.0.21:3002/"
-    })
+export function createApi() {
+  const token = JSON.parse(localStorage.getItem("token"));
 
-    return apiGallery
+  const api = axios.create({
+    baseURL: "http://192.168.0.21:3002/",
+  });
+
+  if (!token) return api;
+
+  api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+
+  return api;
 }
 
-export const api = apiUserGallery()
+export const api = createApi();

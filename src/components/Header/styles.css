@@ -31,3 +31,6 @@
     color: #FEFEFE;
     transition: 0.5s;
 }
+.active {
+    background-color: #FEFEFE;
+}

@@ -61,11 +61,17 @@ button {
 }
 
 .imageModal {
-    width: 35rem;
-    height: 20rem;
-    
+  width: 80%;
+  height: 20rem;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
+.imageVisibility{
+  height: 20rem;
+  width: 50%;;
+}
 .btnModal {
   margin-top: 1rem;
   background-color: #7d7d7d;

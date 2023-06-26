@@ -1,10 +1,12 @@
 import React from "react";
-import ReactDOM from "react-dom";
+
 import Modal from "react-modal";
 
 
 export function ComponentModal(props) {
   return (
+
+    
     <Modal
       isOpen={props.isOpen}
       onRequestClose={props.closeModal}

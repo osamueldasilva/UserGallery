@@ -5,9 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Background from "../../assets/image/Background.jpg";
 import { useState } from "react";
 
-
 function Login() {
-
   // VERIFICAÇÃO DE LOGIN
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -16,18 +14,22 @@ function Login() {
 
   const loginUser = async () => {
     try {
-      const { data } = await  api.post("/user/login", {
-        login, password
-      })
-      
-      navigate('/galeria')
-      console.log(data)
-      alert("Login successful")
-    } catch (error) {
-      alert("Login failed")
-    }
-  }
+      const { data } = await api.post("/user/login", {
+        login,
+        password,
+      });
 
+      localStorage.setItem("token", JSON.stringify(data.token));
+
+      api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
+
+      navigate("/home");
+      console.log(data);
+      alert("Login successful");
+    } catch (error) {
+      alert("Login failed");
+    }
+  };
 
   // FIM DA VERIFICAÇÃO DE LOGIN
   return (
@@ -53,11 +55,9 @@ function Login() {
           </label>
 
           <nav>
-              <button className="btnLogin"
-                onClick={loginUser}
-              >
-                Acessar a plataforma
-              </button>
+            <button className="btnLogin" onClick={loginUser}>
+              Acessar a plataforma
+            </button>
             <NavLink to="/cadastro">
               {" "}
               <p>Cadastra-se</p>{" "}
