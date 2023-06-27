@@ -1,14 +1,12 @@
 import "./styles.css";
 import { ImagemGaleria, ImagemList } from "../../assets/image/index";
-import CarrosselReact from '../../CarrosselReact/index';
+import CarrosselReact from "../../CarrosselReact/index";
 import Header from "../../components/Header/index";
 import Table from "../../components/Table/index";
-
-import { useState } from "react";
+import { api } from "../../service/api";
+import { useState, useEffect } from "react";
 
 function Carrocel() {
-  
-
   const [toggle, setToggle] = useState(true);
 
   const title = toggle === true ? "Carrossel" : "Tabela";
@@ -17,8 +15,20 @@ function Carrocel() {
     setToggle(props);
   }
 
-  
- 
+  const [image, setImage] = useState([]);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  async function getData() {
+    try {
+      const { data } = await api.get("/image");
+      setImage(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <section className="carrocel">
@@ -36,9 +46,12 @@ function Carrocel() {
           </button>
         </div>
       </div>
-      
 
-      {toggle === true ? <CarrosselReact /> : <Table />}
+      {toggle === true &&  image.length ? (
+        <CarrosselReact image={image} />
+      ) : (
+        <Table image={image} setImage={setImage}/>
+      )}
     </section>
   );
 }

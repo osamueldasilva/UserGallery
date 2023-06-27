@@ -3,14 +3,12 @@ import { ImagemDelete, ImagemVisibility } from "../../assets/image/index";
 import { ComponentModal } from "../Modal/index";
 import { useState, useEffect } from "react";
 import { api } from "../../service/api";
-import axios from "axios";
+import { NavLink } from "react-router-dom";
 
-function Table() {
+function Table(props) {
   const [isOpen, setIsOpen] = useState(false);
 
   const [isUpload, setIsUpload] = useState(false);
-
-  const [image, setImage] = useState([]);
 
   function openModal() {
     setIsOpen(true);
@@ -26,51 +24,49 @@ function Table() {
 
   async function handleDelete(idDelete) {
     try {
-      await api.delete(`image/${idDelete}`);
-      setImage((prevState) => prevState.filter(({ id }) => id !== idDelete));
-    } catch (error) {}
+      const confirmed = window.confirm(
+        "Certeza que quer excluir imagem da tabela?"
+      );
+
+      if (confirmed == true) {
+        window.location.reload();
+        await api.delete(`image/${idDelete}`);
+        console.log(props.image);
+        const updatedImage = props.image.filter(({ id }) => id !== idDelete);
+        props.setImage(updatedImage);
+
+        
+      }
+    } catch (error) {
+     
+    }
   }
 
-  const [imageUpload, setImageUpload] = useState(null);
+  const [imageUpload, setImageUpload] = useState();
 
   async function handleUpload() {
     const formData = new FormData();
     formData.append("image", imageUpload);
-
     try {
       const { data } = await api.post("/image/upload", formData);
-      setImage((prevState) => [...prevState, data]);
-      console.log("Aqui", data);
-      alert("Imagem cadastrada");
+      props.setImage((prevState) => [...prevState, data]);
+      setIsOpen(false)
+
     } catch (error) {
       alert("Erro ao cadastrar imagem: " + error);
     }
   }
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  async function getData() {
-    try {
-      const { data } = await api.get("/image");
-      setImage(data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  const [imageView, setImageView] = useState()
+  const [imageView, setImageView] = useState();
 
   const getImageByid = async (id) => {
     try {
-      const {data} = await api.get(`/image/${id}`)
-      setImageView(data)
+      const { data } = await api.get(`/image/${id}`);
+      setImageView(data);
     } catch (error) {
       console.log(error);
     }
-  }
-
+  };
 
   return (
     <>
@@ -100,44 +96,46 @@ function Table() {
           </thead>
 
           <tbody>
-            {image &&
-              image?.map(({ id, name, extension, vlSize, createdAt }) => (
-                <tr key={id}>
-                  <td>{id}</td>
-                  <td>{name}</td>
-                  <td>{extension}</td>
-                  <td>{vlSize}</td>
-                  <td>{createdAt}</td>
-                  <td className="iconAcao">
-                    <button
-                      className="view"
-                      onClick={() => {
-                        openModal();
-                        teste(false);
-                        getImageByid(id)
-                      }}
-                    >
-                      <ImagemVisibility />
-                    </button>
-                    <button
-                      className="delete"
-                      onClick={() => {
-                        handleDelete(id);
-                      }}
-                    >
-                      <ImagemDelete />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+            {props.image.map(({ id, name, extension, vlSize, createdAt }) => (
+              <tr key={id}>
+                <td>{id}</td>
+                <td>{name}</td>
+                <td>{extension}</td>
+                <td>{vlSize}</td>
+                <td>{createdAt}</td>
+                <td className="iconAcao">
+                  <button
+                    className="view"
+                    onClick={() => {
+                      openModal();
+                      teste(false);
+                      getImageByid(id);
+                    }}
+                  >
+                    <ImagemVisibility />
+                  </button>
+                  <button
+                    className="delete"
+                    onClick={() => {
+                      handleDelete(id);
+                    }}
+                  >
+                    <ImagemDelete />
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
         <ComponentModal isOpen={isOpen} closeModal={closeModal}>
           {isUpload === false ? (
             <section className="modal">
               <div className="imageModal">
-                <img className="imageVisibility" 
-                  src={`data:image/${imageView?.extension.split('/')[1]};base64, ${imageView?.data}`}
+                <img
+                  className="imageVisibility"
+                  src={`data:image/${
+                    imageView?.extension.split("/")[1]
+                  };base64, ${imageView?.data}`}
                 />
               </div>
               <button className="btnModal" onClick={closeModal}>
@@ -159,9 +157,12 @@ function Table() {
               </label>
 
               <div className="btnUploadModal">
-                <button className="btnModalCadastro" onClick={handleUpload}>
-                  Cadastrar
-                </button>
+                <NavLink to="/home">
+                  <button className="btnModalCadastro" onClick={handleUpload}>
+                    Cadastrar
+                  </button>
+                </NavLink>
+
                 <button className="btnModalCancelar" onClick={closeModal}>
                   Cancelar
                 </button>

@@ -70,7 +70,7 @@ body {
 }
 
 .btn-toogle1:hover svg,.btn-toogle2:hover svg{
-    background-color: rgb(182, 179, 179);
-    fill: #000;
+    background-color: #f1f5f8;
+    fill: #008FFB;
 }
 

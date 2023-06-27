@@ -21,11 +21,9 @@ function Login() {
 
       localStorage.setItem("token", JSON.stringify(data.token));
 
-      api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
+      api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
 
       navigate("/home");
-      console.log(data);
-      alert("Login successful");
     } catch (error) {
       alert("Login failed");
     }

@@ -1,16 +1,17 @@
-import { useState } from "react";
 import { Carousel } from "react-carousel-minimal";
-import { api } from "../service/api";
+import { useState, useEffect } from "react";
 
-function CarrosselReact() {
-  const [imageCarrocel, setImageCarrocel] = useState();
+function CarrosselReact(props) {  
+  const [data, setData] = useState([]);
 
-  async function handleCarrocel() {
-    try {
-      const { data } = await api.get("/image");
-      setImageCarrocel(data)
-    } catch (error) {}
-  }
+  useEffect(() => {
+    const newData = props.image.map((image) => ({
+      image: `data:image/${image?.extension.split("/")[1]};base64, ${image?.data}`,
+    }));
+
+    setData(newData);
+
+  }, []);
 
   const captionStyle = {
     fontSize: "2em",
@@ -24,6 +25,9 @@ function CarrosselReact() {
   return (
     <div style={{ display: "flex", justifyContent: "space-between" }}>
       <div style={{ width: "50px" }}></div>
+      {data.length && (
+
+      
       <Carousel
         data={data}
         time={2000}
@@ -47,8 +51,11 @@ function CarrosselReact() {
           maxWidth: "850px",
           maxHeight: "500px",
           display: "block",
+          
+          borderRadius: "10px"
         }}
       />
+      )}
       <div style={{ width: "50px" }}></div>
     </div>
   );
