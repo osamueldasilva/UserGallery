@@ -1,59 +1,49 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { api } from '../service/api';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-
+  
+  const navigate = useNavigate();
   useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      verifyToken(token);
-    }
+   verifyToken()
   }, []);
 
   const login = async (loginData) => {
     try {
-      const response = await api.post('/user/login', loginData);
-      const { token } = response.data;
+      const { data } = await api.post('/user/login', loginData);
+      const { token } = data;
 
       localStorage.setItem('token', token);
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-      verifyToken(token);
+      
+      setUser()
     } catch (error) {
       console.error(error);
-      logout();
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem('token');
-    delete api.defaults.headers.common['Authorization'];
-    setUser(null);
-  };
+  const verifyToken = async () => {
+    const token = localStorage.getItem('token');
 
-  const verifyToken = async (token) => {
-    try {
-      const response = await api.post('/verify-token', { token });
-
-      if (response.data.valid) {
-        setUser(response.data.user);
-      } else {
-        logout();
-      }
-    } catch (error) {
-      console.error(error);
-      logout();
+    if (token) {
+      navigate("/home")
+    } else {
+      navigate("/login");
+      
     }
-  };
+      
+  }
+  
 
   const authContextValue = {
-    user,
+    verifyToken,
     login,
-    logout,
+    user,
+    setUser
   };
 
   return (

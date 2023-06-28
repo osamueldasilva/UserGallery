@@ -5,12 +5,12 @@ import Header from "../../components/Header/index";
 import Table from "../../components/Table/index";
 import { api } from "../../service/api";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Carrocel() {
   const [toggle, setToggle] = useState(true);
 
   const title = toggle === true ? "Carrossel" : "Tabela";
-
   function switchToggle(props) {
     setToggle(props);
   }

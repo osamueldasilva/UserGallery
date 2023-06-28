@@ -1,7 +1,7 @@
 import "./styles.css";
 import { ImagemDelete, ImagemVisibility } from "../../assets/image/index";
 import { ComponentModal } from "../Modal/index";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { api } from "../../service/api";
 import { NavLink } from "react-router-dom";
 
@@ -34,12 +34,8 @@ function Table(props) {
         console.log(props.image);
         const updatedImage = props.image.filter(({ id }) => id !== idDelete);
         props.setImage(updatedImage);
-
-        
       }
-    } catch (error) {
-     
-    }
+    } catch (error) {}
   }
 
   const [imageUpload, setImageUpload] = useState();
@@ -50,8 +46,7 @@ function Table(props) {
     try {
       const { data } = await api.post("/image/upload", formData);
       props.setImage((prevState) => [...prevState, data]);
-      setIsOpen(false)
-
+      setIsOpen(false);
     } catch (error) {
       alert("Erro ao cadastrar imagem: " + error);
     }
