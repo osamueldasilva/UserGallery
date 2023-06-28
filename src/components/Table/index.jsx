@@ -6,14 +6,24 @@ import { api } from "../../service/api";
 import { NavLink } from "react-router-dom";
 
 function Table(props) {
+  // * Estado pra abrir e fechar modal de visualização
   const [isOpen, setIsOpen] = useState(false);
 
+  // * Estado pra abrir e fechar modal de upload
   const [isUpload, setIsUpload] = useState(false);
 
+  // * Estado pra fazer Upload da imagem
+  const [imageUpload, setImageUpload] = useState();
+
+  // * Estado pra visualizar imagem
+  const [imageView, setImageView] = useState();
+
+  // *  Função pra abrir o modal
   function openModal() {
     setIsOpen(true);
   }
 
+  // * Função pra fechar o modal
   function closeModal() {
     setIsOpen(false);
   }
@@ -22,12 +32,15 @@ function Table(props) {
     setIsUpload(isUpload);
   }
 
+  // * Função que faz requisição para deletar imagem da tabela e carrocel
   async function handleDelete(idDelete) {
     try {
+      // *  Abre uma menssagem pra poder confirmar se realmente quer exluir imagem
       const confirmed = window.confirm(
         "Certeza que quer excluir imagem da tabela?"
       );
 
+      // *  Se o usuario quiser excluir a função sera executada
       if (confirmed == true) {
         window.location.reload();
         await api.delete(`image/${idDelete}`);
@@ -38,22 +51,23 @@ function Table(props) {
     } catch (error) {}
   }
 
-  const [imageUpload, setImageUpload] = useState();
-
+  // *  Função que faz o upload da imagem
   async function handleUpload() {
+    //  * Cria um objeto FormData para armazenar os dados do formulário
     const formData = new FormData();
     formData.append("image", imageUpload);
+    // *Adiciona imagem ao FormData
     try {
       const { data } = await api.post("/image/upload", formData);
+      // * Atualiza o estado da imagem e adiciona a nova imagem 
       props.setImage((prevState) => [...prevState, data]);
       setIsOpen(false);
     } catch (error) {
       alert("Erro ao cadastrar imagem: " + error);
     }
   }
-
-  const [imageView, setImageView] = useState();
-
+  
+  // * Função que vai ser aberto o modal de visualização e apresentara a devida imagem
   const getImageByid = async (id) => {
     try {
       const { data } = await api.get(`/image/${id}`);
@@ -139,7 +153,7 @@ function Table(props) {
             </section>
           ) : (
             <div className="uploadModal">
-              <label htmlFor="aruivo">
+              <label htmlFor="arquivo">
                 <input
                   type="file"
                   name="arquivo"

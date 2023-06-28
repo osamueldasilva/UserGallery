@@ -5,21 +5,25 @@ import Header from "../../components/Header/index";
 import Table from "../../components/Table/index";
 import { api } from "../../service/api";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 function Carrocel() {
-  const [toggle, setToggle] = useState(true);
 
+  //* Estados de click do botão Toggle
+  const [toggle, setToggle] = useState(true);
+  
+  // * Estado para armazenar a imagem no carrocel
+  const [image, setImage] = useState([]);
+  //
   const title = toggle === true ? "Carrossel" : "Tabela";
+  
   function switchToggle(props) {
     setToggle(props);
   }
 
-  const [image, setImage] = useState([]);
-
   useEffect(() => {
     getData();
   }, []);
+
 
   async function getData() {
     try {

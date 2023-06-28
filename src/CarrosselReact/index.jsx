@@ -23,7 +23,10 @@ function CarrosselReact(props) {
   };
 
   return (
+
+    
     <div style={{ display: "flex", justifyContent: "space-between" }}>
+      
       <div style={{ width: "50px" }}></div>
       {data.length && (
 
@@ -56,6 +59,7 @@ function CarrosselReact(props) {
         }}
       />
       )}
+     
       <div style={{ width: "50px" }}></div>
     </div>
   );

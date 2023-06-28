@@ -9,7 +9,7 @@ export function createApi() {
 
   if (!token) return api;
 
-  api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+  api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   return api;
 }

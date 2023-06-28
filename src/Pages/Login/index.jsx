@@ -6,19 +6,22 @@ import Background from "../../assets/image/Background.jpg";
 import { useState } from "react";
 
 function Login() {
-  // VERIFICAÇÃO DE LOGIN
+  
+  // * Estados pra realizar o login
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
 
+  // * Função que faz requisição de login da api
   const loginUser = async () => {
     try {
       const { data } = await api.post("/user/login", {
         login,
         password,
       });
-
+      // * Guardar informações de nome e token no localStroange
+      localStorage.setItem("name", JSON.stringify(data.name));
       localStorage.setItem("token", JSON.stringify(data.token));
 
       api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
@@ -57,8 +60,8 @@ function Login() {
               Acessar a plataforma
             </button>
             <NavLink to="/cadastro">
-              {" "}
-              <p>Cadastra-se</p>{" "}
+              
+              <p>Cadastra-se</p>
             </NavLink>
           </nav>
         </div>
